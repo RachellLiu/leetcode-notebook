@@ -4,6 +4,7 @@
   
   Two ways to perform the algorithm: [left, right] and [left, right)
   
+  看到面试题里给出的数组是有序数组，都可以想一想是否可以使用二分法。
   Using closed interval is better
 ***********************************************************************/
 
@@ -78,6 +79,54 @@ public:
   Given an array of integers nums sorted in non-decreasing order, find the starting and ending position of a given target value.
   If target is not found in the array, return [-1, -1].
   
-  Now
+  Based on Q35, find the left boundary and right boundary.
 ****************************************************************************************************************************************/
 
+class Solution {
+public:
+    int binarySearch(vector<int>& nums, int target, bool lower) {
+        int left = 0, right = nums.size() - 1;
+        while (left <= right) {
+            int mid = (right + left) / 2;
+            if (target < nums[mid] || (lower && target <= nums[mid])) { // left boundary: use target <= nums[mid]; right boundary: use target < nums[mid]
+                right = mid - 1;
+            }
+            else {
+                left = mid + 1;
+            }
+        }
+        return left;
+    }
+
+    vector<int> searchRange(vector<int>& nums, int target) {
+        int leftIdx = binarySearch(nums, target, true);
+        int rightIdx = binarySearch(nums, target, false) - 1;
+        if (leftIdx <= rightIdx && rightIdx < nums.size() && nums[leftIdx] == target && nums[rightIdx] == target){
+            return vector<int>{leftIdx, rightIdx}; 
+        } 
+        return vector<int>{-1, -1};
+    }
+
+};
+
+/**********************************************************************
+
+  27. Remove Element
+  
+  Two pointers
+  
+***********************************************************************/
+
+class Solution {
+public:
+    int removeElement(vector<int>& nums, int val) {
+        int left = 0;
+        for (int right = 0; right < nums.size(); right++) {
+            if (nums[right] != val) {
+                nums[left] = nums[right];
+                left += 1;
+            }
+        }
+        return left;
+    }
+};
