@@ -113,7 +113,9 @@ public:
 
   27. Remove Element
   
-  Two pointers
+  Two pointers: fast and slow
+  fast pointer used to check the item in the array one by one. (right)
+  slow pointer used to collect the final arrary. (left)
   
 ***********************************************************************/
 
