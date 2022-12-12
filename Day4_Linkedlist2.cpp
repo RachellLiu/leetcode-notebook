@@ -120,7 +120,29 @@ public:
 
   142. Linked List Cycle II
   
-  
+  先用一个快指针，再用一个慢指针，相遇的时候表示有环。快指针相对于慢指针只有一步的差距，
+  相当于每次离慢指针近一步，所以不会错过相遇。
+  然后到达相遇点以后，从head出发，两者再相遇，就是环的入口。
   
 ******************************************************************************************/
-
+class Solution {
+public:
+    ListNode *detectCycle(ListNode *head) {
+        ListNode* fast = head;
+        ListNode* slow = head;
+        while(fast != NULL && fast->next != NULL) {
+            slow = slow->next;
+            fast = fast->next->next;
+            if (slow == fast) {
+                ListNode* index1 = slow;
+                ListNode* index2 = head;
+                while (index1 != index2) {
+                    index1 = index1->next;
+                    index2 = index2->next;
+                }
+                return index1;
+            }
+        }
+        return NULL;
+    }
+};
