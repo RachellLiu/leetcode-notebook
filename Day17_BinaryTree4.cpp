@@ -24,6 +24,58 @@ public:
 /****************************************************************
 
   257. Binary Tree Paths
+  
+  注意回溯backtracking
 
 ****************************************************************/
 
+class Solution {
+public:
+    void traversal(TreeNode* root, vector<int>& path, vector<string>& result) {
+        path.push_back(root->val);
+        if (root->left == NULL && root->right == NULL) {
+            string sPath = "";
+            for (int i = 0; i < path.size() - 1; i++) {
+                sPath += to_string(path[i]);
+                sPath += "->";
+            }
+            sPath += to_string(path[path.size() - 1]);
+            result.push_back(sPath);
+        }
+        if (root->left) {
+            traversal(root->left, path, result);
+            path.pop_back();  //backtracking
+        }
+        if (root->right) {
+            traversal(root->right, path, result);
+            path.pop_back();  //backtracking
+        }
+    }
+    vector<string> binaryTreePaths(TreeNode* root) {
+        vector<int> path;
+        vector<string> result;
+        traversal(root, path, result);
+        return result;
+    }
+};
+
+/****************************************************************
+
+  404. Sum of Left Leaves
+
+****************************************************************/
+
+class Solution {
+public:
+    int sumOfLeftLeaves(TreeNode* root) {
+        if (root == NULL) return 0;
+        if (root->left == NULL && root->right == NULL) return 0;
+        int leftN = sumOfLeftLeaves(root->left);
+        if (root->left && root->left->left == NULL && root->left->right == NULL) {
+            leftN += root->left->val;
+        }
+        int rightN = sumOfLeftLeaves(root->right);
+        int sum = leftN + rightN;
+        return sum;
+    }
+};
