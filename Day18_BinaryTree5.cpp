@@ -26,3 +26,64 @@ public:
 };
 
 // 递归法相对难一点
+
+class Solution {
+public:
+    int maxDepth = INT_MIN;
+    int result;
+    void traversal(TreeNode* root, int depth) {
+        if (root->left == NULL && root->right == NULL) {
+            if (depth > maxDepth) {
+                maxDepth = depth;
+                result = root->val;
+            }
+            return;
+        }
+        if (root->left) {
+            traversal(root->left, depth + 1); 
+        }
+        if (root->right) {
+            traversal(root->right, depth + 1); 
+        }
+        return;
+    }
+    int findBottomLeftValue(TreeNode* root) {
+        traversal(root, 0);
+        return result;
+    }
+};
+
+/******************************************************
+
+  112. Path Sum
+
+******************************************************/
+
+class Solution {
+public:
+    bool traversal(TreeNode* root, int count) {
+        if (root->left == NULL && root->right == NULL && count == 0) return true;
+        if (root->left == NULL && root->right == NULL && count != 0) return false;
+        if (root->left) {
+            count -= root->left->val;
+            if (traversal(root->left,count)) return true;
+            count += root->left->val;
+        }
+        if (root->right) {
+            count -= root->right->val;
+            if (traversal(root->right,count)) return true;
+            count += root->right->val;
+        }
+        return false;
+    }
+    bool hasPathSum(TreeNode* root, int targetSum) {
+        if (root == NULL) return false;
+        return traversal(root, targetSum - root->val);
+    }
+};
+
+/******************************************************
+
+  112. Path Sum
+
+******************************************************/
