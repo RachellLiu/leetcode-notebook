@@ -89,4 +89,15 @@ public:
   
 ********************************************************************/
 
-
+class Solution {
+public:
+    TreeNode* pre = NULL;
+    bool isValidBST(TreeNode* root) {
+        if (root == NULL) return true;
+        bool left = isValidBST(root->left);
+        if (pre != NULL && root->val <= pre->val) return false; //注意这里是root->val <= pre->val，用pre记录前一个节点
+        pre = root;
+        bool right = isValidBST(root->right);
+        return left && right;
+    }
+};
