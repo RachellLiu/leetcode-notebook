@@ -3,8 +3,8 @@
   704. Binary Search
   
   Two ways to perform the algorithm: [left, right] and [left, right)
-  
-  看到面试题里给出的数组是有序数组，都可以想一想是否可以使用二分法。
+  这两个区间指的是寻找target的区间，target在这两种区间内
+  看到面试题里给出的数组是有序数组，都可以想一想是否可以使用二分法哟
   Using closed interval is better
 ***********************************************************************/
 
@@ -12,7 +12,7 @@
 class Solution {
 public:
     int search(vector<int>& nums, int target) {
-        int left = 0, right = nums.size() - 1;  // include the last num
+        int left = 0, right = nums.size() - 1;  // include the last num 因为是左闭右闭，当然从包括最后一个数开始
         while (left <= right) {     // <=, as left can be equal to right. eg.[1,1]
             int middle = (left + right) / 2;
             if (target < nums[middle]) right = middle - 1;  // target has already been found to be smaller than middle, there is no need to include middle
